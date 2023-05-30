@@ -276,6 +276,7 @@ class FlutterLogin extends StatefulWidget {
     /// The [ImageProvider] or asset path [String] for the logo image to be displayed
     dynamic logo,
     this.messages,
+    this.backgroundColor,
     this.theme,
     this.userValidator,
     this.validateUserImmediately,
@@ -338,6 +339,9 @@ class FlutterLogin extends StatefulWidget {
   /// Describes all of the labels, text hints, button texts and other auth
   /// descriptions
   final LoginMessages? messages;
+
+  //// FlutterLogin's background color.
+  final Color? backgroundColor;
 
   /// FlutterLogin's theme. If not specified, it will use the default theme as
   /// shown in the demo gifs and use the colorsheme in the closest `Theme`
@@ -799,15 +803,16 @@ class _FlutterLoginState extends State<FlutterLogin>
         ),
       ],
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: widget.backgroundColor ?? Colors.transparent,
         body: Stack(
           children: <Widget>[
-            GradientBox(
-              colors: [
-                loginTheme.pageColorLight ?? theme.primaryColor,
-                loginTheme.pageColorDark ?? theme.primaryColorDark,
-              ],
-            ),
+            if (widget.backgroundColor == null)
+              GradientBox(
+                colors: [
+                  loginTheme.pageColorLight ?? theme.primaryColor,
+                  loginTheme.pageColorDark ?? theme.primaryColorDark,
+                ],
+              ),
             SingleChildScrollView(
               child: Theme(
                 data: theme,
